@@ -47,7 +47,6 @@
 <table class="table table-hover table-dark">
   <thead>
     <tr>
-      <th scope="col">ID</th>
       <th scope="col">Nome</th>
       <th scope="col">telefone</th>
       <th scope="col">Nota</th>
@@ -58,7 +57,6 @@
   
   <%for(Aluno aluno : new AlunoDB().all()) {%>
     <tr>
-      <td><%=aluno.getId() %></td>
       <td><%=aluno.getNome() %></td>
       <td><%=aluno.getTelefone() %></td>
       <td><%=aluno.getNota() %></td>
