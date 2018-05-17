@@ -7,28 +7,31 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.projescola.model.Aluno;
 import br.com.projescola.model.Cidade;
 import br.com.projescola.util.ConnectionFactory;
 
-public class CidadeDB {
+public class AlunoDB {
 
 	Connection con;
 	PreparedStatement ps;
 	
-	public CidadeDB(){
+	public AlunoDB(){
 		
 		con = ConnectionFactory.getConnection();
 	}
-	public boolean insert(Cidade cidade) {
+	public boolean insert(Aluno aluno) {
 		
 		try {
 			StringBuilder sb = new StringBuilder();
-			sb.append("Insert into cidade(nome, qtd_habitante)");
-			sb.append("value (?,?)");
+			sb.append("Insert into Aluno(nome, nota, telefone, idcidade)");
+			sb.append("value (?,?,?,?)");
 			
 			ps = this.con.prepareStatement(sb.toString());
-			ps.setString(1, cidade.getNome());
-			ps.setInt(2, cidade.getQntabitante());
+			ps.setString(1, aluno.getNome());
+			ps.setInt(2, aluno.getNota());
+			ps.setString(3, aluno.getTelefone());
+			ps.setInt(4, aluno.getCidade().getId());
 			ps.execute();
 			
 			return true;
@@ -40,10 +43,10 @@ public class CidadeDB {
 		return false;
 	}
 	
-	public List<Cidade> all(){
+	public List<Aluno> all(){
 		
-		List<Cidade> lstcidade = new ArrayList<>();
-		String sql = "Select id, nome, qtd_habitante From CIDADE";
+		List<Aluno> lstaluno = new ArrayList<>();
+		String sql = "Select a.nome, a.nota, a.telefone, c.nome From ALUNO a, CIDADE c where a.id=c.id";
 		
 		try {
 			ps = this.con.prepareStatement(sql);
@@ -51,17 +54,19 @@ public class CidadeDB {
 			
 			while(rs.next()) {
 				
-				Cidade cidade = new Cidade();
-				cidade.setId(rs.getInt("id"));
-				cidade.setNome(rs.getString("nome"));
-				cidade.setQntabitante(rs.getInt("qtd_habitante"));
 				
-				lstcidade.add(cidade);
+				Aluno a = new Aluno();
+				a.setNome(rs.getString("a.nome"));
+				a.setNota(rs.getInt("a.nota"));
+				a.setTelefone(rs.getString("a.telefone"));
+				a.setCidade( new Cidade(rs.getString("c.nome")));
+				
+				lstaluno.add(a);
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return lstcidade;
+		return lstaluno;
 	}
 }

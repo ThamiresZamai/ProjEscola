@@ -1,3 +1,7 @@
+<%@page import="br.com.projescola.DB.AlunoDB"%>
+<%@page import="br.com.projescola.model.Aluno"%>
+<%@page import="br.com.projescola.DB.CidadeDB"%>
+<%@page import="br.com.projescola.model.Cidade"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,10 +23,18 @@
 <label>Telefone:</label>
 <input type="text" class="form-control" id="telefone" name="telefone"><br>
 </div>
-<div>
-<label>Cidade:</label>
-<input type="text" class="form-control" id="cidade" name="cidade"><br>
-</div>
+
+<div class="form-group">
+    <label for="SelectCidade">Cidade</label>
+    <select class="form-control" id="SelectCidade" name="SelectCidade">
+    
+    <option>Selecione</option>
+    <% for(Cidade cidade : new CidadeDB().all()){%>
+      <option value="<%=cidade.getId() %>"> <%=cidade.getNome() %></option>
+      <%} %>
+    </select>
+  </div>
+
 <div>
 <label>Nota:</label>
 <input type="number" class="form-control" id="nota" name="nota"><br>
@@ -32,6 +44,32 @@
 <input type="submit" class="btn btn-primary" value="Salvar"><br>
 </dir>
 </form>
-<a href="Principal.jsp">Voltar</a>
+<table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nome</th>
+      <th scope="col">telefone</th>
+      <th scope="col">Nota</th>
+      <th scope="col">Cidade</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  <%for(Aluno aluno : new AlunoDB().all()) {%>
+    <tr>
+      <td><%=aluno.getId() %></td>
+      <td><%=aluno.getNome() %></td>
+      <td><%=aluno.getTelefone() %></td>
+      <td><%=aluno.getNota() %></td>
+      <td><%=aluno.getCidade().getNome() %></td>
+    </tr>
+    <%} %>
+  </tbody>
+</table>
+
+
+<br>
+<a href="Principal.jsp" class="btn btn-primary">Voltar</a>
 </body>
 </html>

@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.projescola.DB.AlunoDB;
+import br.com.projescola.model.Aluno;
+import br.com.projescola.model.Cidade;
+
 @WebServlet("/ControllerAluno")
 public class ControllerAluno extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,16 +27,26 @@ public class ControllerAluno extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PrintWriter out = response.getWriter();
-		out.print("<html>");
-		out.print("<title>");
-		out.print("meu servlet");
-		out.print("<head>");
-		out.print("</head>");
-		out.print("<body>");
-		out.print("meu servlet!");
-		out.print("</body>");
-		out.print("</html>");
-	}
+		int idcidade = Integer.parseInt(request.getParameter("SelectCidade"));
+		String nome = request.getParameter("nome");
+		String telefone = request.getParameter("telefone");
+		int nota = Integer.parseInt(request.getParameter("nota"));
+		
+		Aluno a = new Aluno();
+		a.setCidade(new Cidade(idcidade));
+		a.setNome(nome);
+		a.setTelefone(telefone);
+		a.setNota(nota);
+		
+		if (new AlunoDB().insert(a)) {
+
+			request.setAttribute("msg", "Registro inserido com sucesso.");
+			request.getRequestDispatcher("CadastroAluno.jsp").forward(request, response);
+		} else {
+			request.setAttribute("msg", "Erro ao inserir registro.");
+			request.getRequestDispatcher("CadastroAluno.jsp").forward(request, response);
+		}
+			
+		}	
 
 }
