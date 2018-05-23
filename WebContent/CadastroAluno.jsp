@@ -13,7 +13,14 @@
 <body>
 <h1>Cadastro de Alunos</h1>
 
-<form action="ControllerCidade" method="post">
+<form action="ControllerAluno" method="post">
+<dir class="col-sm-6">
+<%if (request.getAttribute("msg") != null){%>
+<div class="alert alert-primary" role="alert">
+  <%=request.getAttribute("msg")%>
+</div>
+<%} %>
+</dir>
 <dir class="col-sm-3">
 <div>
 <label>Nome:</label>
@@ -39,10 +46,9 @@
 <label>Nota:</label>
 <input type="number" class="form-control" id="nota" name="nota"><br>
 </div>
-
-
 <input type="submit" class="btn btn-primary" value="Salvar"><br>
 </dir>
+
 </form>
 <table class="table table-hover table-dark">
   <thead>

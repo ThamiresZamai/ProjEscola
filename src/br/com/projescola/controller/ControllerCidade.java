@@ -25,7 +25,7 @@ public class ControllerCidade extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String nome = request.getParameter("nome");
-		int qntHabitante = Integer.parseInt(request.getParameter("qntHabitante"));
+		int qntHabitante = Integer.parseInt(request.getParameter("qnthabitante"));
 		
 		Cidade cidade = new Cidade();
 		cidade.setNome(nome);

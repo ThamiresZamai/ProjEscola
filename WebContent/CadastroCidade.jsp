@@ -13,6 +13,14 @@
 <h1>Cadastro de Cidades</h1>
 
 <form action="ControllerCidade" method="post">
+<dir class="col-sm-6">
+<%if (request.getAttribute("msg") != null){%>
+<div class="alert alert-primary" role="alert">
+  <%=request.getAttribute("msg")%>
+</div>
+<%} %>
+</dir>
+
 <dir class="col-sm-3">
 <div>
 <label>Nome:</label>
@@ -27,6 +35,7 @@
 </dir>
 </form>
 <br>
+
 
 <table class="table table-hover table-dark">
   <thead>
